@@ -46,7 +46,7 @@ def reencode(
     with_process=False,  # noqa: FBT002
     failsafe=True,  # noqa: FBT002
     threads: Optional[int] = 1,
-):
+) -> tuple[bool, Optional[subprocess.CompletedProcess[str]]]:
     """Runs ffmpeg with given ffmpeg_args
 
     Arguments -
@@ -86,4 +86,4 @@ def reencode(
             shutil.copy(tmp_path, dst_path)
         if with_process:
             return ffmpeg.returncode == 0, ffmpeg
-        return ffmpeg.returncode == 0
+        return ffmpeg.returncode == 0, None

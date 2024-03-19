@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fix return type of `reencode` function
+
 ## [3.3.1] - 2024-02-27
 
 ### Added

@@ -413,7 +413,7 @@ def test_reencode_return_ffmpeg_output(
 ):
     with tempfile.TemporaryDirectory() as t:
         temp_dir = pathlib.Path(t)
-        ret = copy_media_and_reencode(
+        success, process = copy_media_and_reencode(
             temp_dir,
             src,
             dest,
@@ -422,11 +422,12 @@ def test_reencode_return_ffmpeg_output(
             with_process=return_output,
         )
         if return_output:
-            success, process = ret  # pyright: ignore
             assert success
+            assert process
             assert len(process.stdout) > 0
         else:
-            assert ret
+            assert success
+            assert not process
 
 
 @pytest.mark.slow
@@ -463,7 +464,7 @@ def test_reencode_failsafe(src, dest, ffmpeg_args, failsafe, test_files):
             assert len(exc_info.value.stdout) > 0
 
         else:
-            success = copy_media_and_reencode(
+            success, _ = copy_media_and_reencode(
                 temp_dir, src, dest, ffmpeg_args, test_files, failsafe=failsafe
             )
             assert not success

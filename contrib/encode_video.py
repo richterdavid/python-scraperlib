@@ -23,7 +23,9 @@ def encode_video(src_path: Path, dst_path: Path, preset: str):
         with_process=True,
     )  # pyright: ignore[reportGeneralTypeIssues] (returned type is variable, depending on `with_process` value)
     if not success:
-        logger.error(f"conversion failed:\n{process.stdout}")
+        logger.error("conversion failed!")
+        if process:
+            logger.error(process.stdout)
 
 
 def run(args: list[str] = sys.argv):
